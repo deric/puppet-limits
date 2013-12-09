@@ -9,6 +9,6 @@ class limits (
     $limits = $config
   }
   if $limits {
-    create_resources( 'limits::domain', $limits )
+    create_resources( 'limits::context', $limits )
   }
 }
