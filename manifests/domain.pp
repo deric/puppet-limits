@@ -1,5 +1,6 @@
 define limits::domain (
   $limits_context = 'limits.conf',
+  $domain         = undef,
   $as             = undef,
   $core           = undef,
   $cpu            = undef,
@@ -19,7 +20,6 @@ define limits::domain (
   $sigpending     = undef,
   $stack          = undef,
 ) {
-  $domain = $title
 
   # core: limits the core file size (KB)
   if $core {

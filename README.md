@@ -10,25 +10,28 @@ hiera and just include the limits module in your puppet configuration:
     include limits
 
 Example hiera config:
-
+```yaml
     limits:
-      '*':
+      'Hiera_restrictions_for_all_users':
+        domain: '*'
         nofile:
           soft: '2048'
           hard: '8192'
         nproc:
           soft: '20'
           hard: '20'
-      'myuser':
+      'Hiera_restrictions_for_myuser':
+        domain: 'myuser'
         nofile:
           soft: '4068'
           hard: '8192'
-      '@mygroup':
+      'Hiera_restrictions_for_@mygroup':
+        domain: '@mygroup'
         nproc:
           hard: '50'
-      
+```
 This example creates the following entries in /etc/security/limits.conf:
-
+```bash
     * nofile soft 2048
     * nofile hard 8192
     myuser nofile soft 4068
@@ -36,14 +39,15 @@ This example creates the following entries in /etc/security/limits.conf:
     * nproc soft 20
     * nproc hard 20
     @mygroup nproc hard 50
-
+```
 replacing any existing items in the same domain.
 
 You can also call it as a parameterised class passing in the configuration data as a hash - for example:
-
+```ruby
     class { 'limits':
       config => {
-        '*' => {
+        'Hiera_restrictions_for_all_users' => {
+          'domain' => '*',
           'nofile' => {
             soft => '2048',
             hard => '8192',
@@ -53,7 +57,14 @@ You can also call it as a parameterised class passing in the configuration data 
             hard => '20',
           },
         },
-        '@mygroup' => {
+        'Hiera_restrictions_for_myuser' => {
+          'domain' => 'myuser',
+          'nofile' => {
+            soft => '4068',
+            hard => '8192',
+        },
+        'Hiera_restrictions_for_@mygroup' => {
+          'domain' => '@mygroup',
           'nproc' => {
             hard => '50',
           }
@@ -61,6 +72,7 @@ You can also call it as a parameterised class passing in the configuration data 
       },
       use_hiera => false,
     }
+```
 
 ### Parameters
 
