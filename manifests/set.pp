@@ -5,8 +5,9 @@ define limits::set (
   $soft = undef,
   $hard = undef
 ) {
+
   if $soft {
-    limits::entry { "${domain}-soft-${item}":
+    limits::entry { "${domain}_soft_${item}":
       limits_context  => $limits_context,
       domain          => $domain,
       type            => 'soft',
@@ -15,7 +16,7 @@ define limits::set (
     }
   }
   if $hard {
-    limits::entry { "${domain}-hard-${item}":
+    limits::entry { "${domain}_hard_${item}":
       limits_context  => $limits_context,
       domain          => $domain,
       type            => 'hard',
