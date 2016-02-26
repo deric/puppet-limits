@@ -1,15 +1,18 @@
 limits:
-  '*':
+  limits.conf:
+    limits_domain: '*'
     nofile:
       soft: '2048'
-      hard: '4196'
+      hard: '8192'
     nproc:
       soft: '20'
       hard: '20'
-  'myuser':
+  20_myuser_limits.conf:
+    limits_domain: 'myuser'
     nofile:
       soft: '4068'
       hard: '8192'
-  '@mygroup':
+  10_mygroup_limits.conf:
+    limits_domain: '@mygroup'
     nproc:
       hard: '50'

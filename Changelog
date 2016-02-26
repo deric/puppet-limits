@@ -1,3 +1,7 @@
+0.4.0
+
+* changed structure so that the limits.d directory is now supported
+
 0.3.0
 
 * Enable muliple entries to be set for the same domain (user, group, everyone)

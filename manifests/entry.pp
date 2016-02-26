@@ -11,11 +11,13 @@
 #    value  => '4096'
 #  }
 define limits::entry (
+  $limits_context = 'limits.conf',
   $domain,
   $type,
   $item,
   $value
 ) {
+
   case $item {
     'core': {}
     'data': {}
@@ -36,7 +38,7 @@ define limits::entry (
     'nice': {}
     'rtprio': {}
     default: {
-      warning("Unknown item '$item' so you may get augeas errors - see the limits.conf man page for valid values")
+      warning("Unknown item *${item}* so you may get augeas errors - see the limits.conf man page for valid values")
     }
   }
 
@@ -45,7 +47,11 @@ define limits::entry (
 
   # augtool> match /files/etc/security/limits.conf/domain[.="root"][./type="hard" and ./item="nofile" and ./value="10000"]
 
-  $context = '/files/etc/security/limits.conf'
+  if $limits_context == 'limits.conf' {
+    $context = '/files/etc/security/limits.conf'
+  } else {
+    $context = "/files/etc/security/limits.d/${limits_context}"
+  }
 
   $path_list  = "domain[.=\"${domain}\"][./type=\"${type}\" and ./item=\"${item}\"]"
   $path_exact = "domain[.=\"${domain}\"][./type=\"${type}\" and ./item=\"${item}\" and ./value=\"${value}\"]"
